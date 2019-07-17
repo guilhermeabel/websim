@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace WebSim\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

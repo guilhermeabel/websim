@@ -146,13 +146,13 @@
             <!-- Get Started -->
             <section id="cta" class="main special">
                 <header class="major">
-                    <h2>Congue imperdiet</h2>
+                    <h2>Crie ou acesse sua conta</h2>
                     <p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
                         posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
                 </header>
                 <footer class="major">
                     <ul class="actions special">
-                        <li><a href="generic.html" class="button primary">Get Started</a></li>
+                        <li><a href="home" class="button primary">Acessar</a></li>
                         <li><a href="generic.html" class="button">Learn More</a></li>
                     </ul>
                 </footer>
@@ -208,4 +208,5 @@
         title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -->
 </body>
+
 </html>
