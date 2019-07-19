@@ -6,15 +6,15 @@
             <div class="card">
                 <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container pl-5 pr-5">
-                        <h1 class="display-4">Arquivos</h1>
-                        <p class="lead">Esses são os arquivos que você salvou</p>
+                        <h1 class="display-4">Detalhes do arquivo</h1>
+                        <p class="lead">Essas são as informações sobre o arquivo selecionado</p>
                         <hr class="my-4">
                         @if (session('success'))
                         <div class="alert alert-success" role="alert">
                             {{ session('success') }}
                         </div>
                         @endif
-                        <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo por aqui</p>
+                        <!-- <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo por aqui</p> -->
                         <div class="mb-5 pt-2">
                             <ul class="list-group list-group-flush">
                                 @forelse ($files as $file)

@@ -40,7 +40,8 @@
                         <p>It uses utility classes for typography and spacing to space content out within the larger
                             container.</p>
                         <p class="lead">
-                        <a class="btn btn-light btn-lg" href="files" role="button">Editar</a>
+                        <a class="btn btn-dark btn-lg" href="{{ route('files.create') }}" role="button">Enviar</a>
+                        <a class="btn btn-light btn-lg" href="{{ route('files.index') }}" role="button">Editar</a>
                         </p>
                     </div>
                 </div>
