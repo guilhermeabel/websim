@@ -22,7 +22,7 @@
                                     <div class="p-3 float-left">{{$file->name}}</div>
                                     <div class="float-right p-2">
                                         <a href="#" class="btn rounded-0 btn-dark">Simular</a>
-                                        <a href="#" class="btn rounded-0 btn-dark">Visualizar</a>
+                                        <a href="{{route('files.show',[$file->id])}}" class="btn rounded-0 btn-dark">Visualizar</a>
                                         <form class="form-button" action="{{url('files', [$file->id])}}" method="POST">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">

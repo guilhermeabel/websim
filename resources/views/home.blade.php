@@ -13,7 +13,7 @@
                         <p>It uses utility classes for typography and spacing to space content out within the larger
                             container.</p>
                         <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Simular</a>
+                        <a class="btn btn-primary btn-lg" href="menu" role="button">Simular</a>
                         </p>
                     </div>
                 </div>
