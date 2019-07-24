@@ -137,7 +137,9 @@ return [
         'name.min' => 'O :attribute precisa ter ao menos 3 caracteres.',
         'file.mimetypes' => 'O :attribute deve possuir o formato text/plain.',
         'file.required' => 'É necessário inserir um :attribute.',
-        'file.regex' => 'É necessário inserir um arquivo de texto.'
+        'file.regex' => 'É necessário inserir um arquivo de texto.',
+        'file.min' => 'O :attribute parece ser um arquivo vazio.'
+
     ],
 
     /*

@@ -222,18 +222,6 @@
         },
         {
             "name": "egulias/email-validator",
-<<<<<<< HEAD
-            "version": "2.1.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/128cc721d771ec2c46ce59698f4ca42b73f71b25",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25",
-=======
             "version": "2.1.10",
             "source": {
                 "type": "git",
@@ -244,7 +232,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
                 "reference": "a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
->>>>>>> 5a6f2a1b1517adfa6ef34d3c90b264ec10e14ceb
                 "shasum": ""
             },
             "require": {
@@ -289,11 +276,7 @@
                 "validation",
                 "validator"
             ],
-<<<<<<< HEAD
-            "time": "2019-06-23T10:14:27+00:00"
-=======
             "time": "2019-07-19T20:52:08+00:00"
->>>>>>> 5a6f2a1b1517adfa6ef34d3c90b264ec10e14ceb
         },
         {
             "name": "erusev/parsedown",
@@ -4130,7 +4113,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {

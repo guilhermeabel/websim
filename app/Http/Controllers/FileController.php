@@ -49,13 +49,14 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'userId' => 'required',
-            'file' => 'required',
+            'file' => 'required|min:0.0009',
             'file.*' => 'mimes:txt',
             'name' => 'required',
         ]);
 
-        if (($request->file('file')->extension()) != "txt") {
-            return back();
+        if (($request->file('file')->extension()) == null){
+            return back()
+            ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
         }
 
         if ($request->hasfile('file')) {
@@ -64,7 +65,7 @@ class FileController extends Controller
             $file->updated_at = time();
             $file->name = $request->name;
             $file->userId = $request->userId;
-            $path = $request->file->store('files');
+            $path = $request->file('file')->store('files');
             Storage::setVisibility($path, 'private');
             $file->file = $path;
             $file->save();

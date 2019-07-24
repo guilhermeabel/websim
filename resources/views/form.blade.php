@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 @section('content')
 <div class="container">
     <div class="row justify-content-center mb-3">
@@ -19,9 +19,16 @@
                             </ul>
                         </div>
                         @endif
+                        
                         @if (session('success'))
                         <div class="alert alert-success" role="alert">
                             {{ session('success') }}
+                        </div>
+                        @endif
+
+                        @if (session('danger'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('danger') }}
                         </div>
                         @endif
 
