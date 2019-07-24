@@ -36,7 +36,7 @@ class FileController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('form', compact('user'));
+        return view('fileForm', compact('user'));
     }
 
     /**
@@ -81,7 +81,7 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-        return view('info', compact('file'));
+        //
     }
 
     /**

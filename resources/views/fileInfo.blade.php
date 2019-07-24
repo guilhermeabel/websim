@@ -6,7 +6,6 @@
             <div class="card">
                 <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container pl-5 pr-5">
-                        @if ($file)
                         <h1 class="display-4">Detalhes do arquivo</h1>
                         <p class="lead">Essas são as informações sobre o arquivo selecionado</p>
                         <hr class="my-4">
@@ -18,7 +17,7 @@
                         <!-- <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo por aqui</p> -->
                         <div class="mb-5 pt-2">
                             <ul class="list-group list-group-flush">
-
+                                @forelse ($files as $file)
                                 <li class="list-group-item p-0">
                                     <div class="p-3 float-left">{{$file->name}}</div>
                                     <div class="float-right p-2">
@@ -31,6 +30,10 @@
                                         </form>
                                     </div>
                                 </li>
+                                @empty
+                                <p class="lead">Você ainda não possui arquivos. <br>Clique no botão adicionar para enviar
+                                    novos arquivos.</p>
+                                @endforelse
                             </ul>
                         </div>
                         <p class="lead">
@@ -38,9 +41,6 @@
                                 role="button">Adicionar</a>
                             <a class="btn btn-light btn-lg" href="{{ route('home') }}" role="button">Voltar</a>
                         </p>
-                        @else
-                        <p class="lead">O arquivo não existe.</p>
-                        @endif
                     </div>
                 </div>
                 @if (session('status'))

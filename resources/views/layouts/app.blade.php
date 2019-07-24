@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,12 +12,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <!-- Scripts -->
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.scrollex.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.scrolly.min.js') }}"></script>
-
-    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -85,8 +78,15 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <!-- Scripts -->
+        <script src="{{ asset('js/jquery.min.js') }}" defer></script>
+        <script src="{{ asset('js/jquery.scrollex.min.js') }}" defer></script>
+        <script src="{{ asset('js/jquery.scrolly.min.js') }}" defer></script>
+
+        <script src="{{ asset('js/app.js') }}" async></script>
+        <script src="{{ asset('js/script.js') }}" async></script>
 
     </div>
 </body>
-<script src="{{ asset('js/script.js') }}"></script>
+
 </html>
