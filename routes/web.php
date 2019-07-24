@@ -16,13 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('home', 'HomeController@index')->name('home');
-
+Route::get('menu', 'HomeController@menu')->name('menu');
 Route::resource('files', 'FileController');
-
-
-// Route::get('/files', 'FileController@files')->name('files');
-// Route::get('/fileForm', 'FileController@fileForm')->name('fileForm');
-// Route::post('/upload', 'FileController@upload')->name('upload');
-// Route::post('/destroy', 'FileController@destroy')->name('destroy');
