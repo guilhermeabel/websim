@@ -1,5 +1,4 @@
 <?php
-
 namespace WebSim\Http\Controllers;
 
 use Auth;
@@ -84,7 +83,10 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-        return view('info', compact('file'));
+        $file_raw = fopen("../storage/app/files/teste.txt", "r") or die("Unable to open file!");
+        $items = explode("\n", fread($file_raw, filesize("../storage/app/files/teste.txt")));
+        fclose($file_raw);
+        return view('info', compact('file', 'items'));
     }
 
     /**
@@ -146,17 +148,16 @@ class FileController extends Controller
         //     return view('plot', compact('file'));
 
         // JSON ----------------------------------------------------------------------------------------------------------------------
-        $items = [54,5,7,34,5,445345,345,35,45,3];
+        $items = [54, 5, 7, 34, 5, 445345, 345, 35, 45, 3];
         $json = json_encode($items);
-        $process = new Process("C:\python27\python ../resources/python/plot-python.py {$json}");
+        $process = new Process("python ../resources/python/plot-python.py {$json}");
         $process->run();
 
         // executes after the command finishes
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
-        dump(json_decode($process->getOutput(), true));
-
+        $items = json_decode($process->getOutput());
+        return view('plot', compact('items'));
     }
 }

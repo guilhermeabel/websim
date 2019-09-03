@@ -13,14 +13,18 @@
                         <p>It uses utility classes for typography and spacing to space content out within the larger
                             container.</p>
                         <p class="lead">
-                        <!-- <a class="btn btn-primary btn-lg" href="menu" role="button">Simular</a> -->
+                            <!-- <a class="btn btn-primary btn-lg" href="menu" role="button">Simular</a> -->
                         </p>
                     </div>
                 </div>
-                @if (1)
+                @if (true)
                 <div class="card-body">
                     <div class="alert alert-success" role="alert">
-                        {{ $file }}
+                        <ul>
+                            @for($i = 0; $i < count($items); $i++) 
+                            <li>{{ $items[$i] }}</li>
+                            @endfor
+                        </ul>
                     </div>
                 </div>
                 @endif
