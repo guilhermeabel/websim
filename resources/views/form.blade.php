@@ -29,7 +29,7 @@
                         @if (session('danger'))
                         <div class="alert alert-danger" role="alert">
                             {{ session('danger') }}
-                        </div>
+                        </div> 
                         @endif
 
                         <p>É necessário enviar um arquivo em formato de texto plano para que os dados sejam analisados corretamente</p>
@@ -51,7 +51,8 @@
                                 {!!Form::text('name', '<p class="lead mb-0 mt-2">Dê um nome para o arquivo</p>
                                 ')->placeholder('Nome...')->id('name')!!}
                                 <button type="submit" class="ml-0 btn btn-dark btn-lg" role="button">Salvar</button>
-                                <a class="btn btn-light btn-lg" href="/home" role="button">Voltar</a>
+                                <a class="btn btn-outline-secondary btn-lg" href="{{ route('files.index') }}" role="button">Visualizar</a>
+                                <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
                             </form>
                         </div>
                     </div>

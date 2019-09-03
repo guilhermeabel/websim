@@ -18,4 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('menu', 'HomeController@menu')->name('menu');
+
+Route::get('plot', 'FileController@plot')->name('files.plot');
+
 Route::resource('files', 'FileController');

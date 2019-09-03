@@ -6,6 +6,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Storage;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use WebSim\File;
 
 class FileController extends Controller
@@ -15,7 +17,7 @@ class FileController extends Controller
         $this->middleware('auth');
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -54,9 +56,9 @@ class FileController extends Controller
             'name' => 'required',
         ]);
 
-        if (($request->file('file')->extension()) == null){
+        if (($request->file('file')->extension()) == null) {
             return back()
-            ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
+                ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
         }
 
         if ($request->hasfile('file')) {
@@ -120,5 +122,41 @@ class FileController extends Controller
         $request->session()->flash('message', 'Arquivo excluído com sucesso!');
         return back()
             ->with('success', 'Arquivo excluído com sucesso.');
+    }
+
+    public function plot(Request $request, File $file)
+    {
+
+        //     $file = fopen("../storage/app/files/teste.txt", "r") or die("Unable to open file!");
+        //     $items = [54,5,7,34,5,445345,345,35,45,3];
+        //  //   explode("\n", fread($file, filesize("../storage/app/files/teste.txt")));
+        //     fclose($file);
+
+        //     $process = new Process("C:\python374\python ../resources/python/plot-python.py {$items}");
+        //     $process->run();
+
+        //     // executes after the command finishes
+        //     if (!$process->isSuccessful()) {
+        //         throw new ProcessFailedException($process);
+        //     }
+
+        //     $file = $process->getOutput();
+        //     // Result (string): {'neg': 0.204, 'neu': 0.531, 'pos': 0.265, 'compound': 0.1779}
+
+        //     return view('plot', compact('file'));
+
+        // JSON ----------------------------------------------------------------------------------------------------------------------
+        $items = [54,5,7,34,5,445345,345,35,45,3];
+        $json = json_encode($items);
+        $process = new Process("C:\python27\python ../resources/python/plot-python.py {$json}");
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        dump(json_decode($process->getOutput(), true));
+
     }
 }

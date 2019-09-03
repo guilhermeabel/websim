@@ -36,7 +36,7 @@
                         <p class="lead">
                             <a class="btn btn-dark btn-lg" href="{{ route('files.create') }}"
                                 role="button">Adicionar</a>
-                            <a class="btn btn-light btn-lg" href="{{ route('home') }}" role="button">Voltar</a>
+                            <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
                         </p>
                         @else
                         <p class="lead">O arquivo não existe.</p>

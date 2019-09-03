@@ -32,11 +32,40 @@
 }
 
 label {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome and Opera */
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+    supported by Chrome and Opera */
+}
+
+.bg-white {
+    transition: background 500ms linear;
+    -webkit-transition: background 500ms linear;
+    -moz-transition: background 500ms linear;
+}
+
+.bg-lightgray {
+    background-color: rgba(0, 0, 0, 0.022);
+    transition: background 500ms linear;
+    -webkit-transition: background 500ms linear;
+    -moz-transition: background 500ms linear;
+}
+
+i {
+    color: #007bff;
+    transition: opacity 3s ease-in-out;
+    -webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -ms-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+    opacity: 1;
 }
