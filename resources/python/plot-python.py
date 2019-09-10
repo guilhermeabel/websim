@@ -1,6 +1,5 @@
 #aa
 import sys
-sys.path.insert(0, '/path/to/matplotlib')
 import json
 import matplotlib
 matplotlib.use('Agg')
@@ -20,11 +19,12 @@ ax.plot(t, s)
 ax.set(xlabel='time (s)', ylabel='voltage (mV)',
        title='About as simple as it gets, folks')
 ax.grid()
-dir = "/home/wilhelm/github/websim/storage/app/files/" #diretorio
-filename = str(datetime.now().strftime("%b %d %Y %H:%M:%S")) #nome do arquivo (data atual + hora)
-fig.savefig(dir + filename + ' plot.png')
+directory = "/home/wilhelm/github/websim/storage/app/files/" #diretorio
+time = str(datetime.now().strftime("%b %d %Y %H:%M:%S")) #hora atual
+filename = time + ' plot.png' #nome do arquivo (diretorio + hora)
+fig.savefig(directory + filename)
 ####################################################################
 x=sys.argv[1]
 data=json.loads(x)
-data.sort(reverse = 1)
+data[0] = filename
 print(json.dumps(data))

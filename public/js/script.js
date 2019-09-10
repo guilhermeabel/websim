@@ -18,9 +18,4 @@ $(".custom-file-input").on("change", function() {
         .addClass("selected")
         .html(fileName);
 });
-var e = 0;
-$(".custom-control-input").on("change", function() {
-    $(this).parent().parent().parent().parent().parent().toggleClass("bg-lightgray");
-    $(this).parent().parent().parent().parent().parent().toggleClass("bg-white");
-    $(this).parent().parent().find("i").toggleClass("fas fa-check-square")
-});
+$(".card").hide().fadeIn(1000);

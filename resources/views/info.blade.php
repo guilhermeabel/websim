@@ -3,8 +3,8 @@
 <div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-md-10">
-            <div class="card">
-                <div class="jumbotron jumbotron-fluid mb-0">
+            <div class="card border-0 shadow mb-4 rounded">
+                <div class="jumbotron jumbotron-fluid mb-0 rounded">
                     <div class="container pl-5 pr-5">
                         @if ($file)
                         <h1 class="display-4">Detalhes do arquivo</h1>

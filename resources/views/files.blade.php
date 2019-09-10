@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center mb-3">
         <div class="col-md-10">
             <div class="card">
                 <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container pl-5 pr-5">
-                        <h1 class="display-4">Arquivos</h1>
-                        <p class="lead">Esses são os arquivos que você salvou</p>
+                        <h1 class="display-4">Dados</h1>
+                        <p class="lead">Esses são os dados que você salvou</p>
                         <hr class="my-4">
                         @if (session('success'))
                         <div class="alert alert-success" role="alert">
