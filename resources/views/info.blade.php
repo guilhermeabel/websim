@@ -3,8 +3,8 @@
 <div class="container">
     <div class="row justify-content-center mb-3">
         <div class="col-md-10">
-            <div class="card">
-                <div class="jumbotron jumbotron-fluid mb-0">
+            <div class="card border-0 shadow mb-4 rounded">
+                <div class="jumbotron jumbotron-fluid mb-0 rounded">
                     <div class="container pl-5 pr-5">
                         @if ($file)
                         <h1 class="display-4">Detalhes do arquivo</h1>
@@ -15,7 +15,11 @@
                             {{ session('success') }}
                         </div>
                         @endif
-                        <!-- <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo por aqui</p> -->
+                        <p>
+                            <code>
+                                @json($items);
+                            </code>
+                        </p>
                         <div class="mb-5 pt-2">
                             <ul class="list-group list-group-flush">
 
@@ -36,7 +40,7 @@
                         <p class="lead">
                             <a class="btn btn-dark btn-lg" href="{{ route('files.create') }}"
                                 role="button">Adicionar</a>
-                            <a class="btn btn-light btn-lg" href="{{ route('home') }}" role="button">Voltar</a>
+                            <a class="btn btn-light btn-lg" href="{{ route('files.index')}}" role="button">Voltar</a>
                         </p>
                         @else
                         <p class="lead">O arquivo não existe.</p>

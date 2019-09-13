@@ -18,3 +18,4 @@ $(".custom-file-input").on("change", function() {
         .addClass("selected")
         .html(fileName);
 });
+$(".card").hide().fadeIn(1000);
