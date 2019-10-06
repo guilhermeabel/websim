@@ -1,11 +1,15 @@
 body {
     background-image: url(images/overlay.png), linear-gradient(50deg, #111 15%, #2b2e4a 85%); /* https://colorhunt.co/palette/238 */
-    height: 100vh; 
+    min-height: 100vh; 
 }
 .logo2{
     max-height: 3vh!important;
     object-fit: cover;
     transform: scale(4.2);
+}
+
+.badge{
+    display:inline-block;padding: .5em .5em;
 }
 .code {
     font-family: monospace;

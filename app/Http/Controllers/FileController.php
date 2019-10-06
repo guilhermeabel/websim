@@ -8,90 +8,119 @@ use Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use WebSim\File;
-
+use \Crypt;
 class FileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); // Apenas usuários autenticados podem acessar
     }
-
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $user = Auth::user();
-        $files = DB::table('files')->where('userId', '=', $user->id)->get();
-
-        return view('files', compact('files'));
+        $user = Auth::user(); //Pega o usuário atual
+        $files = DB::table('files')->where('userId', '=', $user->id)->get(); // Pega todos os arquivos do usuário atual
+        return view('files', compact('files')); // Envia esses arquivos para a view 'files'
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $user = Auth::user();
-        return view('form', compact('user'));
+        $enc_id = Auth::user()->id; // Pega a id do usuário atual
+        $user = Crypt::encrypt($enc_id); //Encripta essa id para passar para o formulario
+        $mode = Crypt::encrypt(0); // Define o modo de envio que o usuário escolheu (0 = arquivo txt).
+        return view('form_file', compact('user', 'mode')); // Retorna a view 'form_file' e passa para ela os dados de 'user' e 'mode'
     }
-
+    public function digit()
+    {
+        $enc_id = Auth::user()->id; // Pega a id do usuário atual
+        $user = Crypt::encrypt($enc_id); //Encripta essa id para passar para o formulario
+        $mode = Crypt::encrypt(1); // Define o modo de envio que o usuário escolheu (1 = inserção de digitos).
+        return view('form_digit', compact('user', 'mode')); // Retorna a view 'form_digit' e passa para ela os dados de 'user' e 'mode'
+    }
     /**
-     * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'userId' => 'required',
-            'file' => 'required|min:0.0009',
-            'file.*' => 'mimes:txt',
-            'name' => 'required',
+        $this->validate($request, [ 
+            'mode' => 'required'
         ]);
-
-        if (($request->file('file')->extension()) == null) {
-            return back()
-                ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
-        }
-
-        if ($request->hasfile('file')) {
+        if (Crypt::decrypt($request->mode)){ // Testa o tipo de dado a ser guardado (arquivo ou dígito)
+            // Validação dos dados da request
+            $this->validate($request, [ 
+                'userId' => 'required',
+                'data' => 'required',
+                'name' => 'required',
+            ]);
+            if (preg_match('/^[\d,-;]+$/', $request->data, $data)){ // Verifica se o conteúdo dos dígitos corresponde ao regex ///////////////// MELHORAR REGEX ;;--++
+                $filename = $request->name . time(); // Cria um nome único para o arquivo
+                $content = fopen($filename,'x+'); // Cria o arquivo
+                fwrite($content, serialize($data)); // Escreve os dados digitados no arquivo
+                fclose($content);
+            } else {
+                return back()
+                    ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
+            }
+            $dec_id = Crypt::decrypt($request->userId);
             $file = new File;
             $file->created_at = time();
             $file->updated_at = time();
             $file->name = $request->name;
-            $file->userId = $request->userId;
-            $path = $request->file('file')->store('files');
+            $file->userId = $dec_id;
+            Storage::put($filename, $content);
+            $path = $content->store('files');
             Storage::setVisibility($path, 'private');
             $file->file = $path;
             $file->save();
+        } else {
+            // Validação dos dados da request
+            $this->validate($request, [ 
+                'userId' => 'required',
+                'file' => 'required|min:0.0009',
+                'file.*' => 'mimes:txt',
+                'name' => 'required',
+            ]);
+            // Mais uma validação bruta, por garantia
+            if (($request->file('file')->extension()) == null) {
+                return back()
+                    ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
+            }
+            // Criação do arquivo no banco
+            if ($request->hasfile('file')) {
+                $dec_id = Crypt::decrypt($request->userId);
+                $file = new File;
+                $file->created_at = time();
+                $file->updated_at = time();
+                $file->name = $request->name;
+                $file->userId = $dec_id;
+                $path = $request->file('file')->store('files');
+                Storage::setVisibility($path, 'private');
+                $file->file = $path;
+                $file->save();
+            }
+            //Retorna sucesso para o formulário
+            return back()->with('success', 'Arquivo enviado com sucesso.');
         }
-        return back()
-            ->with('success', 'Arquivo enviado com sucesso.');
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param  \WebSim\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(File $file)
-    {
-        $file_raw = fopen("../storage/app/files/teste.txt", "r") or die("Unable to open file!");
-        $items = explode("\n", fread($file_raw, filesize("../storage/app/files/teste.txt")));
-        fclose($file_raw);
-        return view('info', compact('file', 'items'));
-    }
-
+    // public function show(File $file)
+    // {
+    //     $file_raw = fopen("../storage/app/files/teste.txt", "r") or die("Não foi possível carregar o arquivo, tente enviá-lo novamente.");
+    //     $items = explode("\n", fread($file_raw, filesize("../storage/app/files/teste.txt")));
+    //     fclose($file_raw);
+    //     return view('info', compact('file', 'items'));
+    // }
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param  \WebSim\File  $file
      * @return \Illuminate\Http\Response
      */
@@ -101,8 +130,6 @@ class FileController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \WebSim\File  $file
      * @return \Illuminate\Http\Response
@@ -113,8 +140,6 @@ class FileController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param  \WebSim\File  $file
      * @return \Illuminate\Http\Response
      */
