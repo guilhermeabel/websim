@@ -46,12 +46,11 @@
                                                     class="btn badge badge-pill btn-light badge-primary">Selecionar</button>
                                                 <button class="btn badge badge-pill btn-light badge-info"
                                                     data-toggle="modal" data-target="#exampleModal">Informações</button>
-                                                <form action="{{url('files', [$file->id])}}"
-                                                    method="POST">
+                                                <form action="{{url('files', [$file->id])}}" method="POST">
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <button type="submit"
-                                                    class="btn badge badge-pill btn-light badge-danger">Excluir</button>
+                                                        class="btn badge badge-pill btn-light badge-danger">Excluir</button>
                                                 </form>
                                             </div>
                                         </p>
@@ -89,10 +88,10 @@
                             </ul>
                         </div>
                         <p class="lead">
-                            <a class="btn btn-dark btn-lg" href="{{ route('files.create') }}" role="button">Enviar
+                            <a class="btn btn-dark btn-lg" href="{{ route('files.create'), ['mode' => 'file'] }}" role="button">Enviar
                                 arquivo</a>
-                            <a class="btn btn-secondary btn-lg" href="{{ route('files.digit') }}" role="button">Inserir
-                                valores</a>
+                            <a class="btn btn-secondary btn-lg" href="{{ url('files/create')->with(['mode' => 1]) }}"
+                                role="button">Inserir valores</a>
                             <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
                         </p>
                     </div>

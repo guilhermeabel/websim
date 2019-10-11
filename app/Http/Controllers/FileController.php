@@ -4,11 +4,9 @@ namespace WebSim\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Storage;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use WebSim\File;
 use \Crypt;
+
 class FileController extends Controller
 {
     public function __construct()
@@ -24,63 +22,49 @@ class FileController extends Controller
         $files = DB::table('files')->where('userId', '=', $user->id)->get(); // Pega todos os arquivos do usuário atual
         return view('files', compact('files')); // Envia esses arquivos para a view 'files'
     }
+    public function createFile(Request $request)
+    {
+        $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
+        $mode = 0;
+        return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
+    }
 
-    /**
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        $enc_id = Auth::user()->id; // Pega a id do usuário atual
-        $user = Crypt::encrypt($enc_id); //Encripta essa id para passar para o formulario
-        $mode = Crypt::encrypt(0); // Define o modo de envio que o usuário escolheu (0 = arquivo txt).
-        return view('form_file', compact('user', 'mode')); // Retorna a view 'form_file' e passa para ela os dados de 'user' e 'mode'
+        $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
+        return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
     }
-    public function digit()
-    {
-        $enc_id = Auth::user()->id; // Pega a id do usuário atual
-        $user = Crypt::encrypt($enc_id); //Encripta essa id para passar para o formulario
-        $mode = Crypt::encrypt(1); // Define o modo de envio que o usuário escolheu (1 = inserção de digitos).
-        return view('form_digit', compact('user', 'mode')); // Retorna a view 'form_digit' e passa para ela os dados de 'user' e 'mode'
-    }
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $this->validate($request, [ 
-            'mode' => 'required'
+        $this->validate($request, [
+            'mode' => 'required',
         ]);
-        if (Crypt::decrypt($request->mode)){ // Testa o tipo de dado a ser guardado (arquivo ou dígito)
+        if (Crypt::decrypt($request->mode)) { // Testa o tipo de dado a ser guardado (arquivo ou dígito)
             // Validação dos dados da request
-            $this->validate($request, [ 
+            $this->validate($request, [
                 'userId' => 'required',
-                'data' => 'required',
+                'file' => 'required',
                 'name' => 'required',
             ]);
-            if (preg_match('/^[\d,-;]+$/', $request->data, $data)){ // Verifica se o conteúdo dos dígitos corresponde ao regex ///////////////// MELHORAR REGEX ;;--++
-                $filename = $request->name . time(); // Cria um nome único para o arquivo
-                $content = fopen($filename,'x+'); // Cria o arquivo
-                fwrite($content, serialize($data)); // Escreve os dados digitados no arquivo
-                fclose($content);
+
+            if (preg_match('/^[^,]*(?:,[^,]+)*$/', $request->file, $file)) { // Verifica se o conteúdo dos dígitos corresponde ao regex e retorna o array de números
+                $id = Crypt::decrypt($request->userId); //Decripta o id do usuário
+                $file = new File;
+                $file->created_at = time();
+                $file->updated_at = time();
+                $file->name = $request->name;
+                $file->userId = $dec_id;
+                $file->file = $file;
+                $file->save();
             } else {
                 return back()
                     ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
             }
-            $dec_id = Crypt::decrypt($request->userId);
-            $file = new File;
-            $file->created_at = time();
-            $file->updated_at = time();
-            $file->name = $request->name;
-            $file->userId = $dec_id;
-            Storage::put($filename, $content);
-            $path = $content->store('files');
-            Storage::setVisibility($path, 'private');
-            $file->file = $path;
-            $file->save();
+
         } else {
             // Validação dos dados da request
-            $this->validate($request, [ 
+            $this->validate($request, [
                 'userId' => 'required',
                 'file' => 'required|min:0.0009',
                 'file.*' => 'mimes:txt',
@@ -109,40 +93,14 @@ class FileController extends Controller
         }
     }
 
-    /**
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    // public function show(File $file)
-    // {
-    //     $file_raw = fopen("../storage/app/files/teste.txt", "r") or die("Não foi possível carregar o arquivo, tente enviá-lo novamente.");
-    //     $items = explode("\n", fread($file_raw, filesize("../storage/app/files/teste.txt")));
-    //     fclose($file_raw);
-    //     return view('info', compact('file', 'items'));
-    // }
-    /**
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
     public function edit(File $file)
     {
         //
     }
-
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, File $file)
     {
         //
     }
-
-    /**
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, File $file)
     {
         $file->delete();

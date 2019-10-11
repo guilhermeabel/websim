@@ -9,6 +9,7 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('menu', 'HomeController@menu')->name('menu');
 
 Route::get('plot', 'FileController@plot')->name('files.plot');
-Route::get('digit', 'FileController@digit')->name('files.digit');
+// Route::get('createFile', 'FileController@createFile')->name('files.createFile');
+// Route::get('createData', 'FileController@createData')->name('files.createData');
 
 Route::resource('files', 'FileController');
