@@ -19,3 +19,5 @@ $(".custom-file-input").on("change", function() {
         .html(fileName);
 });
 $(".card").hide().fadeIn(1000);
+
+// $("document").ready

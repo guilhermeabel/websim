@@ -88,9 +88,9 @@
                             </ul>
                         </div>
                         <p class="lead">
-                            <a class="btn btn-dark btn-lg" href="{{ route('files.create'), ['mode' => 'file'] }}" role="button">Enviar
+                            <a class="btn btn-dark btn-lg" href="{{ route('files.createFile') }}" role="button">Enviar
                                 arquivo</a>
-                            <a class="btn btn-secondary btn-lg" href="{{ url('files/create')->with(['mode' => 1]) }}"
+                            <a class="btn btn-secondary btn-lg" href="{{ route('files.createData') }}"
                                 role="button">Inserir valores</a>
                             <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
                         </p>

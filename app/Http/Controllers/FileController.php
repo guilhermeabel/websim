@@ -22,16 +22,17 @@ class FileController extends Controller
         $files = DB::table('files')->where('userId', '=', $user->id)->get(); // Pega todos os arquivos do usuário atual
         return view('files', compact('files')); // Envia esses arquivos para a view 'files'
     }
-    public function createFile(Request $request)
+    public function createFile()
     {
         $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
-        $mode = 0;
+        $mode = Crypt::encrypt(0);
         return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
     }
 
-    public function create(Request $request)
+    public function createData()
     {
         $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
+        $mode = Crypt::encrypt(1);
         return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
     }
 
@@ -40,23 +41,25 @@ class FileController extends Controller
         $this->validate($request, [
             'mode' => 'required',
         ]);
-        if (Crypt::decrypt($request->mode)) { // Testa o tipo de dado a ser guardado (arquivo ou dígito)
+        if (Crypt::decrypt($request->mode)) { // Testa o tipo de dado a ser guardado (arquivo ou dígito) ----- true == digito, false == arquivo
             // Validação dos dados da request
             $this->validate($request, [
                 'userId' => 'required',
-                'file' => 'required',
+                'data' => 'required',
                 'name' => 'required',
             ]);
 
-            if (preg_match('/^[^,]*(?:,[^,]+)*$/', $request->file, $file)) { // Verifica se o conteúdo dos dígitos corresponde ao regex e retorna o array de números
+            if (preg_match('/^[^,]*(?:,[^,]+)*$/', $request->file, $data)) { // Verifica se o conteúdo dos dígitos corresponde ao regex e retorna o array de números
                 $id = Crypt::decrypt($request->userId); //Decripta o id do usuário
                 $file = new File;
                 $file->created_at = time();
                 $file->updated_at = time();
                 $file->name = $request->name;
-                $file->userId = $dec_id;
-                $file->file = $file;
+                $file->userId = $id;
+                $file->data = serialize($data);
                 $file->save();
+                //Retorna sucesso para o formulário
+                return back()->with('success', 'Arquivo enviado com sucesso.');
             } else {
                 return back()
                     ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
@@ -77,16 +80,20 @@ class FileController extends Controller
             }
             // Criação do arquivo no banco
             if ($request->hasfile('file')) {
-                $dec_id = Crypt::decrypt($request->userId);
-                $file = new File;
-                $file->created_at = time();
-                $file->updated_at = time();
-                $file->name = $request->name;
-                $file->userId = $dec_id;
-                $path = $request->file('file')->store('files');
-                Storage::setVisibility($path, 'private');
-                $file->file = $path;
-                $file->save();
+                $data = fopen($request->file, "r");
+                $stat = fstat($data);
+                $file_data = fread($data, $stat['size']);
+                fclose($data);
+                if (preg_match('/^[^,]*(?:,[^,]+)*$/', $request->data, $data)) {
+                    $id = Crypt::decrypt($request->userId);
+                    $file = new File;
+                    $file->created_at = time();
+                    $file->updated_at = time();
+                    $file->name = $request->name;
+                    $file->userId = $id;
+                    $file->data = serialize($data);
+                    $file->save();
+                }
             }
             //Retorna sucesso para o formulário
             return back()->with('success', 'Arquivo enviado com sucesso.');

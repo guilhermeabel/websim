@@ -4,7 +4,7 @@ namespace WebSim;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Data extends Model
+class File extends Model
 {
-    protected $fillable = ['name', 'data', 'userId'];
+    protected $fillable = ['userId', 'name', 'data'];
 }

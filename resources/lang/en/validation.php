@@ -138,7 +138,8 @@ return [
         'file.mimetypes' => 'O :attribute deve possuir o formato text/plain.',
         'file.required' => 'É necessário inserir um :attribute.',
         'file.regex' => 'É necessário inserir um arquivo de texto.',
-        'file.min' => 'O :attribute parece ser um arquivo vazio.'
+        'file.min' => 'O :attribute parece ser um arquivo vazio.',
+        'data' => 'É necessário inserir :data válidas.'
 
     ],
 
@@ -155,7 +156,8 @@ return [
 
     'attributes' => [
         'name' => 'nome',
-        'file' => 'arquivo'
+        'file' => 'arquivo',
+        'data' => 'informações'
     ],
 
 ];
