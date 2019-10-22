@@ -1,4 +1,4 @@
-$(".custom-file-input").on("change", function() {
+$(".custom-file-input").on("change", function () {
     let ext = $(this.value.match(/\.([^\.]+)$/));
     switch (ext[0]) {
         case ".txt":
@@ -18,4 +18,20 @@ $(".custom-file-input").on("change", function() {
         .addClass("selected")
         .html(fileName);
 });
+<<<<<<< Updated upstream
 $(".card").hide().fadeIn(1000);
+=======
+$(".card")
+    .hide()
+    .fadeIn(1000);
+$(".custom-control-label").click(function () {
+    $(this)
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .toggleClass("border border-primary custom-border");
+});
+// $("document").ready
+>>>>>>> Stashed changes

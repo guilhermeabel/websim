@@ -7,7 +7,20 @@
                 <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container pl-5 pr-5">
                         <h1 class="display-4">Dados</h1>
-                        <p class="lead">Esses são os dados que você salvou</p>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <h5 class="alert-heading pt-2">Importante</h5>
+                            <ul>
+                                <li>
+                                    <p class="mb-1">Aqui estão os dados que você salvou</p>
+                                </li>
+                                <li>
+                                    <p>É possível optar por enviar arquivos ou digitar os valores diretamente</p>
+                                </li>
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert" atia-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <hr class="my-4">
                         @if (session('success'))
                         <div class="alert alert-success" role="alert">
@@ -15,25 +28,11 @@
                         </div>
                         @endif
                         @if($files->count())
-                        <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo por aqui</p>
+                        <p>É possível realizar a plotagem dos dados, ver informações sobre o arquivo ou excluí-lo</p>
                         @endif
                         <div class="mb-5 pt-2">
                             <ul class="list-group list-group-flush">
                                 @forelse ($files as $file)
-<<<<<<< Updated upstream
-                                <li class="list-group-item p-0">
-                                    <div class="p-3 float-left">{{$file->name}}</div>
-                                    <div class="float-right p-2">
-                                        <a href="{{route('files.plot',[$file->id])}}" class="btn rounded-0 btn-dark">Simular</a>
-                                        <a href="{{route('files.show',[$file->id])}}" class="btn rounded-0 btn-dark">Visualizar</a>
-                                        <form class="form-button" action="{{url('files', [$file->id])}}" method="POST">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="submit" class="btn rounded-0 btn-dark">Delete</button>
-                                        </form>
-                                    </div>
-                                </li>
-=======
                                 <div class="card list-group">
                                     <div class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="d-flex w-100 justify-content-between">
@@ -69,19 +68,14 @@
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="infoModalLabel">Informações sobre {{$file->name}}</h5>
+                                                <h5 class="modal-title" id="infoModalLabel">Modal title</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                @if($file->plot == false)
-                                                Esse arquivo ainda não foi plotado.
-                                                @elseif($file->plot)
-                                                O arquivo possui já possui a(s) seguinte(s) plotagem(ns):
-                                                <br> <b>{{$file->plot}}</b>
-                                                @endif
+                                                ...
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -91,16 +85,18 @@
                                         </div>
                                     </div>
                                 </div>
->>>>>>> Stashed changes
                                 @empty
-                                <p class="lead">Você ainda não possui arquivos. <br>Clique no botão adicionar para enviar
-                                    novos arquivos.</p>
+                                <div class="alert alert-info" role="alert">
+                                    Você ainda não possui arquivos
+                                </div>
                                 @endforelse
                             </ul>
                         </div>
                         <p class="lead">
-                            <a class="btn btn-dark btn-lg" href="{{ route('files.create') }}"
-                                role="button">Adicionar</a>
+                            <a class="btn btn-dark btn-lg" href="{{ route('files.createFile') }}" role="button">Enviar
+                                arquivo</a>
+                            <a class="btn btn-secondary btn-lg" href="{{ route('files.createData') }}"
+                                role="button">Inserir valores</a>
                             <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
                         </p>
                     </div>
@@ -116,5 +112,5 @@
         </div>
     </div>
 </div>
-</div>
+
 @endsection
