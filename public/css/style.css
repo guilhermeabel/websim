@@ -1,26 +1,18 @@
 body {
-<<<<<<< Updated upstream
-    background-image: url(images/overlay.png), linear-gradient(50deg, #111 15%, #2b2e4a 85%); /* https://colorhunt.co/palette/238 */
-    height: 100vh; 
-=======
     background-image: url(images/overlay.png),
         linear-gradient(50deg, #111 15%, #2b2e4a 85%); /* https://colorhunt.co/palette/238 */
     min-height: 100vh;
->>>>>>> Stashed changes
 }
 .logo2 {
     max-height: 3vh !important;
     object-fit: cover;
     transform: scale(4.2);
 }
-<<<<<<< Updated upstream
-=======
 
 .badge {
     display: inline-block;
     padding: 0.5em 0.5em;
 }
->>>>>>> Stashed changes
 .code {
     font-family: monospace;
     font-size: 18px;

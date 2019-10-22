@@ -20,12 +20,8 @@ class CreateFilesTable extends Migration
             $table->bigIncrements('id');
             $table->string('user_id');
             $table->string('name');
-<<<<<<< Updated upstream:database/migrations/2019_07_18_144617_create_files_table.php
-            $table->string('file');
-=======
             $table->string('plot')->default(false);
             $table->string('data');
->>>>>>> Stashed changes:database/migrations/2019_10_10_154007_create_files_table.php
             $table->timestamps();
         });
     }

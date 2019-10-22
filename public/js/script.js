@@ -18,9 +18,6 @@ $(".custom-file-input").on("change", function () {
         .addClass("selected")
         .html(fileName);
 });
-<<<<<<< Updated upstream
-$(".card").hide().fadeIn(1000);
-=======
 $(".card")
     .hide()
     .fadeIn(1000);
@@ -34,4 +31,3 @@ $(".custom-control-label").click(function () {
         .toggleClass("border border-primary custom-border");
 });
 // $("document").ready
->>>>>>> Stashed changes

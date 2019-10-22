@@ -3,8 +3,6 @@
 <div class="container mt-5">
     <div class="row justify-content-center mb-3">
         <div class="col-md-10">
-<<<<<<< Updated upstream
-=======
             @if ((Crypt::decrypt($mode)) == 1)
             <div class="card">
                 <div class="jumbotron jumbotron-fluid mb-0">
@@ -78,7 +76,6 @@
                 </div>
             </div>
             @elseif((Crypt::decrypt($mode)) == 0)
->>>>>>> Stashed changes
             <div class="card">
                 <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container pl-5 pr-5">
@@ -100,12 +97,9 @@
                         <div class="alert alert-success" role="alert">
                             {{ session('success') }}
                         </div>
-<<<<<<< Updated upstream
-=======
                         <div class="alert alert-success" role="alert">
                             <a href="{{ route('files.index') }}">Clique aqui para voltar ao menu de dados</a>
                         </div>
->>>>>>> Stashed changes
                         @endif
 
                         @if (session('danger'))
@@ -114,30 +108,6 @@
                         </div> 
                         @endif
 
-<<<<<<< Updated upstream
-                        <p>É necessário enviar um arquivo em formato de texto plano para que os dados sejam analisados corretamente</p>
-                        <p class="lead mb-2 mt-2">Selecione um arquivo em formato <span class="code">.txt</span></p>
-                        <div class="col-12 p-0">
-                            <form action="{{ route('files.store') }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="userId" value="{{ $user->id }}">
-                                <div class="custom-file">
-                                    <input id="file" name="file" accept=".txt" type="file"
-                                        class="@if($errors->has('name') && !$errors->has('file')) is-valid @endif @if($errors->has('file')) is-invalid @endif custom-file-input">
-                                    <label for="file" class="custom-file-label text-truncate">Arquivo...</label>
-                                </div>
-                                @if($errors->has('file'))
-                                <div class="absolutolouco-feedback">
-                                    <p>Verifique o arquivo e seu formato.</p>
-                                </div>
-                                @endif
-                                {!!Form::text('name', '<p class="lead mb-0 mt-2">Dê um nome para o arquivo</p>
-                                ')->placeholder('Nome...')->id('name')!!}
-                                <button type="submit" class="ml-0 btn btn-dark btn-lg" role="button">Salvar</button>
-                                <a class="btn btn-outline-secondary btn-lg" href="{{ route('files.index') }}" role="button">Visualizar</a>
-                                <a class="btn btn-light btn-lg" href="{{url()->previous()}}" role="button">Voltar</a>
-                            </form>
-=======
                         <div class="d-flex justify-content-center">
                             <p>É necessário enviar um arquivo em formato <span class="code">.txt</span> para que os
                                 dados sejam analisados corretamente</p>
@@ -180,11 +150,11 @@
                                         role="button">Voltar</a>
                                 </form>
                             </div>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

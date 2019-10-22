@@ -3,16 +3,9 @@ namespace WebSim\Http\Controllers;
 
 use Auth;
 use \Crypt;
+use Storage;
 use WebSim\File;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-<<<<<<< Updated upstream
-use Storage;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
-use WebSim\File;
-=======
->>>>>>> Stashed changes
 
 class FileController extends Controller
 {
@@ -28,12 +21,6 @@ class FileController extends Controller
      */
     public function index()
     {
-<<<<<<< Updated upstream
-        $user = Auth::user();
-        $files = DB::table('files')->where('userId', '=', $user->id)->get();
-
-        return view('files', compact('files'));
-=======
         $user = Auth::user(); //Pega o usuário atual
         $files = File::get()->where('user_id', '=', $user->id); // Pega todos os arquivos do usuário atual
         return view('files', compact('files')); // Envia esses arquivos para a view 'files'
@@ -43,7 +30,14 @@ class FileController extends Controller
         $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
         $mode = Crypt::encrypt(0);
         return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
->>>>>>> Stashed changes
+    }
+
+    
+    public function createData()
+    {
+        $user = Crypt::encrypt(Auth::user()->id); // Pega a id do usuário atual e encripta essa id para passar para o formulario
+        $mode = Crypt::encrypt(1);
+        return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
     }
 
     /**
@@ -65,30 +59,6 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'userId' => 'required',
-            'file' => 'required|min:0.0009',
-            'file.*' => 'mimes:txt',
-            'name' => 'required',
-        ]);
-<<<<<<< Updated upstream
-
-        if (($request->file('file')->extension()) == null) {
-            return back()
-                ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
-        }
-
-        if ($request->hasfile('file')) {
-            $file = new File;
-            $file->created_at = time();
-            $file->updated_at = time();
-            $file->name = $request->name;
-            $file->userId = $request->userId;
-            $path = $request->file('file')->store('files');
-            Storage::setVisibility($path, 'private');
-            $file->file = $path;
-            $file->save();
-=======
         if (Crypt::decrypt($request->mode)) { // Testa o tipo de dado a ser guardado (arquivo ou dígito) ----- true == digito, false == arquivo
             // Validação dos dados da request
             $this->validate($request, [
@@ -109,7 +79,7 @@ class FileController extends Controller
                 $file->data = $data;
                 $file->save();
                 //Retorna sucesso para o formulário
-                return back()->with('success', 'Arquivo enviado com sucesso.');
+                return back()->with('success', 'Dados enviados com sucesso.');
             } else {
                 return back()
                     ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
@@ -154,7 +124,6 @@ class FileController extends Controller
             }
             //Retorna sucesso para o formulário
             return back()->with('success', 'Arquivo enviado com sucesso.');
->>>>>>> Stashed changes
         }
         return back()
             ->with('success', 'Arquivo enviado com sucesso.');
