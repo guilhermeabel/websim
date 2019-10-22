@@ -54,8 +54,13 @@ class PlotController extends Controller
     public function results()
     {
         $user = Auth::user(); //Pega o usuário atual
-        $files = File::get()->where('user_id', '=', $user->id);
-        $plots = DB::table('plots')->where('user_id', '=', $user->id)->get();
-        return view('results', compact('plots')); // Envia os plots selecionado para a view 'results'
+        // $files = File::get()->where('user_id', '=', $user->id);
+        $plots = Plot::all();
+
+        foreach ($plots as $plot) {
+            dd($plot);
+        }
+        // $plots = Plot::get()->where('file_id', '=', $user->id);
+        // return view('results', compact('plots')); // Envia os plots selecionado para a view 'results'
     }
 }

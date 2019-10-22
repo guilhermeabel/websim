@@ -48,7 +48,7 @@
                                                         class="btn badge badge-pill btn-light badge-primary">Selecionar</button>
                                                 </form>
                                                 <button class="btn badge badge-pill btn-light badge-info"
-                                                    data-toggle="modal" data-target="#infoModal">Visualizar</button>
+                                                    data-toggle="modal" data-target="#infoModal{{$loop->iteration}}">Visualizar</button>
 
                                                 <form action="{{url('files', [$file->id])}}" method="POST">
                                                     <input type="hidden" name="_method" value="DELETE">
@@ -60,16 +60,16 @@
                                         </p>
                                         <hr class="my-1">
                                         <small class="text-muted">
-                                            {{$file->data}}
+                                            {{$file->data}} 
                                         </small>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="infoModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="infoModal{{$loop->iteration}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="infoModalLabel{{$loop->iteration}}" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="infoModalLabel">Informações sobre
+                                                <h5 class="modal-title" id="infoModalLabel{{$loop->iteration}}">Informações sobre
                                                     {{$file->name}}</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
@@ -87,7 +87,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Fechar</button>
-                                                <a class="btn btn-primary" href="results/{{$plot->id}}" role="button">Visualizar</a>
+                                                <a class="btn btn-primary" href="results" role="button">Visualizar</a>
                                             </div>
                                         </div>
                                     </div>
