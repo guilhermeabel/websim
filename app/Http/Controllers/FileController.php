@@ -5,7 +5,10 @@ use Auth;
 use \Crypt;
 use Storage;
 use WebSim\File;
+use WebSim\Plot;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class FileController extends Controller
 {
@@ -14,16 +17,12 @@ class FileController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user(); //Pega o usuário atual
         $files = File::get()->where('user_id', '=', $user->id); // Pega todos os arquivos do usuário atual
-        return view('files', compact('files')); // Envia esses arquivos para a view 'files'
+        $plots = File::with('plots')->get();
+        return view('files', compact('files', 'plots')); // Envia esses arquivos para a view 'files'
     }
     public function createFile()
     {
@@ -40,23 +39,12 @@ class FileController extends Controller
         return view('form', compact('user', 'mode')); // Retorna a view 'form' e passa para ela a id de 'user' e o 'mode' de envio
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $user = Auth::user();
         return view('form', compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if (Crypt::decrypt($request->mode)) { // Testa o tipo de dado a ser guardado (arquivo ou dígito) ----- true == digito, false == arquivo
@@ -78,8 +66,30 @@ class FileController extends Controller
                 $data = preg_replace("/[\s_]/", ";", $data);
                 $file->data = $data;
                 $file->save();
+
+                $data_array = explode(";", $data);
+                $json = json_encode($data_array);
+                $process = new Process("python ../resources/python/basic_dist.py {$json}");
+                $process->run();
+        
+                // executes after the command finishes
+                if (!$process->isSuccessful()) {
+                    throw new ProcessFailedException($process);
+                }
+                
+                $data = json_decode($process->getOutput());
+                $plot = new Plot;
+                $plot->file_id = $file->id;
+                $plot->name = "basic_dist";
+                $plot->content = $data;
+                $plot->created_at = time();
+                $plot->updated_at = time();
+                $plot->save();     
+                
+                
                 //Retorna sucesso para o formulário
                 return back()->with('success', 'Dados enviados com sucesso.');
+
             } else {
                 return back()
                     ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
@@ -124,54 +134,12 @@ class FileController extends Controller
             }
             //Retorna sucesso para o formulário
             return back()->with('success', 'Arquivo enviado com sucesso.');
-        }
+        }//Retorna sucesso para o formulário
         return back()
             ->with('success', 'Arquivo enviado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function show(File $file)
-    {
-        $file_raw = fopen("../storage/app/files/teste.txt", "r") or die("Unable to open file!");
-        $items = explode("\n", fread($file_raw, filesize("../storage/app/files/teste.txt")));
-        fclose($file_raw);
-        return view('info', compact('file', 'items'));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(File $file)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \WebSim\File  $file
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, File $file)
     {
         $file->delete();

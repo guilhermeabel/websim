@@ -283,7 +283,7 @@
                                     </div>
                                 </div>
                                 <p class="lead">
-                                    <button type="submit" class="btn btn-primary btn-lg">Simular</button>
+                                    <button type="submit" class="btn btn-primary btn-lg">Plotar</button>
                                     <a class="btn btn-light btn-lg" href="{{url()->previous()}}"
                                         role="button">Voltar</a>
                                 </p>

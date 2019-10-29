@@ -2,12 +2,11 @@
 namespace WebSim\Http\Controllers;
 
 use Auth;
+use Illuminate\Http\Request;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use WebSim\File;
 use WebSim\Plot;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class PlotController extends Controller
 {
@@ -15,35 +14,44 @@ class PlotController extends Controller
     {
         $this->middleware('auth'); // Apenas usuários autenticados podem acessar
     }
-    
+
     public function plot(Request $request)
     {
-        // $items = $request->data;
-        // $json = json_encode($items);
-        // $process = new Process("python ../resources/python/plot-python.py {$json}");
-        // $process->run();
+        
+        if ($request->distributions){
+            $distributions = implode(", ", $request->distributions);
+        
+        
 
-        // // executes after the command finishes
-        // if (!$process->isSuccessful()) {
-        //     throw new ProcessFailedException($process);
-        // }
-        // $items = json_decode($process->getOutput());
-        // return view('result');
-
-        // $plot = new Plot;
-        // $plot->created_at = time();
-        // $plot->updated_at = time();
-        // $plot->name = /* nome gerado na função */ 000 ;
-        // $plot->file_id = $request->file_id;
-        // $plot->data = $data;
-        // $plot->save();
-
-        $file = File::find($request->file_id);
-
-        $distributions=implode(", ", $request->distributions);
-
-        $file->plot = $distributions;
-        $file->save();
+            $items = $request->data;
+            $json = json_encode($items);
+            $process = new Process("python ../resources/python/basic_dist.py {$json}");
+            $process->run();
+    
+            // executes after the command finishes
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            
+            $items = json_decode($process->getOutput());
+            
+            $plot = new Plot;
+            $plot->file_id = $request->file_id;
+            $plot->data = $items;
+            $plot->name = "plot-basico-".time();
+            $plot->created_at = time();
+            $plot->updated_at = time();
+            $plot->save();
+            
+            return view('result', compact('items'));
+            
+            $file = File::find($request->file_id);
+            
+    
+            $file->plot = $distributions;
+            $file->save();
+        }
+        
     }
 
     public function dist(File $file)
@@ -53,14 +61,16 @@ class PlotController extends Controller
 
     public function results()
     {
-        $user = Auth::user(); //Pega o usuário atual
-        // $files = File::get()->where('user_id', '=', $user->id);
-        $plots = Plot::all();
+        // $user = Auth::user(); //Pega o usuário atual
+        // // $files = File::get()->where('user_id', '=', $user->id);
+        // $plots = Plot::all();
 
-        foreach ($plots as $plot) {
-            dd($plot);
-        }
+        // foreach ($plots as $plot) {
+        //     dd($plot);
+        // }
         // $plots = Plot::get()->where('file_id', '=', $user->id);
-        // return view('results', compact('plots')); // Envia os plots selecionado para a view 'results'
+        $plots = File::with('plots')->get();
+        return view('results', compact('plots')); // Envia os plots selecionado para a view 'results'
+        // return view('results'); // Envia os plots selecionado para a view 'results'
     }
 }

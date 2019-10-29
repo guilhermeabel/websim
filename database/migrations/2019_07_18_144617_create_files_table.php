@@ -20,7 +20,7 @@ class CreateFilesTable extends Migration
             $table->bigIncrements('id');
             $table->string('user_id');
             $table->string('name');
-            $table->string('plot')->default(false);
+            $table->string('dist')->default(false);
             $table->string('data');
             $table->timestamps();
         });

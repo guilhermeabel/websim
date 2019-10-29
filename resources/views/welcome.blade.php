@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <title>WebSim</title>
     <meta charset="utf-8" />
@@ -11,6 +10,14 @@
     <link rel="stylesheet" href="css/main.css" />
     <noscript>
         <link rel="stylesheet" href="css/noscript.css" /></noscript>
+<style>
+.adjust {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+</style>
 </head>
 
 <body class="is-preload">
@@ -27,8 +34,9 @@
             <ul>
                 <li><a href="#intro" class="active">Sobre</a></li>
                 <li><a href="#first">Projeto</a></li>
-                <li><a href="#second">Contato</a></li>
-                <li><a href="#cta">Acesso</a></li>
+                <li><a href="#second">Parceiros</a></li>
+                <li><a href="#access">Acesso</a></li>
+                <li><a href="#footer">Contato</a></li>
             </ul>
         </nav>
         <!-- HOME
@@ -55,61 +63,32 @@
                 <div class="spotlight">
                     <div class="content">
                         <header class="major">
-                            <h2>Ipsum sed adipiscing</h2>
+                            <h2>O que é o <b>OCA</b>?</h2>
                         </header>
-                        <p>Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna
-                            adipiscing magna etiam amet veroeros. Lorem ipsum dolor tempus sit cursus.
-                            Tempus nisl et nullam lorem ipsum dolor sit amet aliquam.</p>
+                        <p>O portal de <b>O</b>timização <b>C</b>ombinatória <b>A</b>plicada tem como objetivo apresentar 
+                        ferramentas de otimização para apresentar as empresas possibilidades de minimizar 
+                        o desperdício de matéria-prima</p>
                         <ul class="actions">
-                            <li><a href="generic.html" class="button">Learn More</a></li>
+                            <li><a href="generic.html" class="button">Mais informações</a></li>
                         </ul>
                     </div>
-                    <span class="image"><img src="image/pic01.jpg" alt="" /></span>
+                    <span class="image"><img src="image/oca_logo.png" alt="" /></span>
                 </div>
             </section>
+
+           
 
             <!-- First Section -->
             <section id="first" class="main special">
                 <header class="major">
-                    <h2>Magna veroeros</h2>
-                </header>
-                <ul class="features">
-                    <li>
-                        <span class="icon solid major style1 fa-code"></span>
-                        <h3>Ipsum consequat</h3>
-                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
-                            consequat.</p>
-                    </li>
-                    <li>
-                        <span class="icon major style3 fa-copy"></span>
-                        <h3>Amed sed feugiat</h3>
-                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
-                            consequat.</p>
-                    </li>
-                    <li>
-                        <span class="icon major style5 fa-gem"></span>
-                        <h3>Dolor nullam</h3>
-                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
-                            consequat.</p>
-                    </li>
-                </ul>
-                <footer class="major">
-                    <ul class="actions special">
-                        <li><a href="generic.html" class="button">Learn More</a></li>
-                    </ul>
-                </footer>
-            </section>
-
-            <!-- Second Section -->
-            <section id="second" class="main special">
-                <header class="major">
                     <h2>Ipsum consequat</h2>
-                    <p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-                        posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
+                    <p>O Projeto Otimização Combinatória Aplicada 
+                tem como objetivo a construção de ferramentas para otimização 
+                dos processos industriais. </p>
                 </header>
-                <ul class="statistics">
+                <!-- <ul class="statistics">
                     <li class="style1">
-                        <span class="icon solid fa-code-branch"></span>
+                        <span class="icon solid fa-ruler-combined"></span>
                         <strong>5,120</strong> Etiam
                     </li>
                     <li class="style2">
@@ -128,32 +107,61 @@
                         <span class="icon fa-gem"></span>
                         <strong>1,024</strong> Nullam
                     </li>
-                </ul>
-                <p class="content">Nam elementum nisl et mi a commodo porttitor. Morbi sit amet nisl eu arcu faucibus
-                    hendrerit vel a risus. Nam a orci mi, elementum ac arcu sit amet, fermentum pellentesque et purus.
-                    Integer maximus varius lorem, sed convallis diam accumsan sed. Etiam porttitor placerat sapien, sed
-                    eleifend a enim pulvinar faucibus semper quis ut arcu. Ut non nisl a mollis est efficitur
-                    vestibulum. Integer eget purus nec nulla mattis et accumsan ut magna libero. Morbi auctor iaculis
-                    porttitor. Sed ut magna ac risus et hendrerit scelerisque. Praesent eleifend lacus in lectus aliquam
-                    porta. Cras eu ornare dui curabitur lacinia.</p>
+                </ul> -->
+                <p class="content">Entre os aspectos passíveis de 
+                melhoria estão o aproveitamento adequado da matéria prima, 
+                utilização racional dos recursos naturais e gerenciamento 
+                inteligente da mão de obra. Você pode utilizar as ferramentas 
+                disponibilizadas no site sem compromisso ou ônus. E sinta-se 
+                convidado a expor seus problemas a equipe de desenvolvimento: 
+                como um projeto de extensão, estamos interessados em auxiliar 
+                no desenvolvimento da indústria regional.</p>
                 <footer class="major">
                     <ul class="actions special">
-                        <li><a href="generic.html" class="button">Learn More</a></li>
+                        <li><a href="generic.html" class="button">Mais informações</a></li>
                     </ul>
                 </footer>
             </section>
-
+ <!-- Second Section -->
+ <section id="second" class="main special">
+                <header class="major">
+                    <h2>Parceiros</h2>
+                </header>
+                <ul class="features">
+                    <li>
+                        <span class="image"><img class="adjust" src="image/logo_UFSM.png" alt="" /></span>
+                        <h3>Ipsum consequat</h3>
+                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
+                            consequat.</p>
+                    </li>
+                    <li>
+                        <span class="image"><img class="adjust" src="image/logo_CTISM.png" alt="" /></span>
+                        <h3>Amed sed feugiat</h3>
+                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
+                            consequat.</p>
+                    </li>
+                    <li>
+                        <span class="image"><img class="adjust" src="image/logo_FAT.png" alt="" /></span>
+                        <h3>Dolor nullam</h3>
+                        <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed
+                            consequat.</p>
+                    </li>
+                </ul>
+                <footer class="major">
+                    <ul class="actions special">
+                        <li><a href="generic.html" class="button">Mais informações</a></li>
+                    </ul>
+                </footer>
+            </section>
             <!-- Get Started -->
-            <section id="cta" class="main special">
+            <section id="access" class="main special">
                 <header class="major">
                     <h2>Crie ou acesse sua conta</h2>
-                    <p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-                        posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
                 </header>
                 <footer class="major">
                     <ul class="actions special">
                         <li><a href="home" class="button primary">Acessar</a></li>
-                        <li><a href="generic.html" class="button">Learn More</a></li>
+                        <li><a href="register" class="button">Registrar</a></li>
                     </ul>
                 </footer>
             </section>
@@ -168,28 +176,32 @@
                     dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat
                     egestas velit, vitae tincidunt odio.</p>
                 <ul class="actions">
-                    <li><a href="generic.html" class="button">Learn More</a></li>
+                    <li><a href="generic.html" class="button">Mais informações</a></li>
                 </ul>
             </section>
             <section>
-                <h2>Etiam feugiat</h2>
+                <h2>Informações</h2>
                 <dl class="alt">
-                    <dt>Address</dt>
-                    <dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-                    <dt>Phone</dt>
-                    <dd>(000) 000-0000 x 0000</dd>
+                    <dt>Endereço</dt>
+                    <dd>Av. Roraima, 1000 - Prédio 5 &bull; Camobi, Santa Maria <br> 
+                    Rio Grande do Sul &bull; 97105-900, Brasil</dd>
+                    <dt>Telefone</dt>
+                    <dd>(55) 3220-9540</dd>
+                    <dt>Fax</dt>
+                    <dd>(55) 3220-8006</dd>
                     <dt>Email</dt>
                     <dd><a href="#">information@untitled.tld</a></dd>
                 </dl>
-                <ul class="icons">
+                <!-- <ul class="icons">
                     <li><a href="#" class="icon brands fa-twitter alt"><span class="label">Twitter</span></a></li>
                     <li><a href="#" class="icon brands fa-facebook-f alt"><span class="label">Facebook</span></a></li>
                     <li><a href="#" class="icon brands fa-instagram alt"><span class="label">Instagram</span></a></li>
                     <li><a href="#" class="icon brands fa-github alt"><span class="label">GitHub</span></a></li>
                     <li><a href="#" class="icon brands fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-                </ul>
+                </ul> -->
             </section>
-            <p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+            <p class="copyright">&copy; 2019 OCA - Otimização Computacional Aplicada. </p>
+            <!-- <p class="copyright">&copy; Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
         </footer>
 
     </div>

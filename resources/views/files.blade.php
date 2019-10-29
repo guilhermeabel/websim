@@ -77,17 +77,23 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                @if($file->plot == false)
+                                                @if($file->dist == false)
                                                 Esse arquivo ainda não foi plotado.
-                                                @elseif($file->plot)
+                                                @elseif($file->dist)
                                                 O arquivo possui já possui a(s) seguinte(s) plotagem(ns):
-                                                <br> <b>{{$file->plot}}</b>
+                                                <br> <b>{{$file->dist}}</b>
+                                                @foreach ($plots->where("file_id","=",$file->id) as $plot)
+                                                    {{$plot->content}}
+                                                @break ($loop->first)
+                                                @endforeach
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Fechar</button>
+                                                    @if($file->dist)
                                                 <a class="btn btn-primary" href="results" role="button">Visualizar</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
