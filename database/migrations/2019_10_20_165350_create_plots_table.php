@@ -17,6 +17,7 @@ class CreatePlotsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('file_id');
+            $table->string('user_id');
             $table->string('content');
             $table->timestamps();
         });

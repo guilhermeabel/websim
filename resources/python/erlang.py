@@ -1,6 +1,9 @@
-#aa
+#!/usr/bin/python3
+
 import sys
 import json
+
+"""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -27,4 +30,10 @@ fig.savefig(directory + filename)
 x=sys.argv[1]
 data=json.loads(x)
 data[0] = filename
+"""
+
+x=sys.argv[1]
+data=json.loads(x)
+
+data = "PYTHON WAS HERE BITCH"
 print(json.dumps(data))

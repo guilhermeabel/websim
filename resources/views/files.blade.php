@@ -48,7 +48,8 @@
                                                         class="btn badge badge-pill btn-light badge-primary">Selecionar</button>
                                                 </form>
                                                 <button class="btn badge badge-pill btn-light badge-info"
-                                                    data-toggle="modal" data-target="#infoModal{{$loop->iteration}}">Visualizar</button>
+                                                    data-toggle="modal"
+                                                    data-target="#infoModal{{$loop->iteration}}">Visualizar</button>
 
                                                 <form action="{{url('files', [$file->id])}}" method="POST">
                                                     <input type="hidden" name="_method" value="DELETE">
@@ -60,7 +61,7 @@
                                         </p>
                                         <hr class="my-1">
                                         <small class="text-muted">
-                                            {{$file->data}} 
+                                            {{$file->data}}
                                         </small>
                                     </div>
                                 </div>
@@ -69,7 +70,8 @@
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="infoModalLabel{{$loop->iteration}}">Informações sobre
+                                                <h5 class="modal-title" id="infoModalLabel{{$loop->iteration}}">
+                                                    Informações sobre
                                                     {{$file->name}}</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
@@ -77,21 +79,22 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
+                                                @foreach ($plots->where("file_id","=",$file->id) as $plot)
+                                                {{$plot->content}}
+                                                @endforeach
+
+                                                <hr class="my-1">
                                                 @if($file->dist == false)
                                                 Esse arquivo ainda não foi plotado.
                                                 @elseif($file->dist)
                                                 O arquivo possui já possui a(s) seguinte(s) plotagem(ns):
                                                 <br> <b>{{$file->dist}}</b>
-                                                @foreach ($plots->where("file_id","=",$file->id) as $plot)
-                                                    {{$plot->content}}
-                                                @break ($loop->first)
-                                                @endforeach
                                                 @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Fechar</button>
-                                                    @if($file->dist)
+                                                @if($file->dist)
                                                 <a class="btn btn-primary" href="results" role="button">Visualizar</a>
                                                 @endif
                                             </div>

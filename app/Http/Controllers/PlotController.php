@@ -1,7 +1,6 @@
 <?php
 namespace WebSim\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -17,41 +16,57 @@ class PlotController extends Controller
 
     public function plot(Request $request)
     {
-        
-        if ($request->distributions){
-            $distributions = implode(", ", $request->distributions);
-        
-        
 
-            $items = $request->data;
-            $json = json_encode($items);
-            $process = new Process("python ../resources/python/basic_dist.py {$json}");
-            $process->run();
-    
-            // executes after the command finishes
-            if (!$process->isSuccessful()) {
-                throw new ProcessFailedException($process);
+        // var_dump($request->data);
+        // dd($request->data);
+
+        if ($request->distributions) {
+            //Se a Request existe
+            // Cria uma variável para guardar **todas** as distribuições, para posteriormente verificar na Request quais foram selecionadas
+            $all_distributions = array(
+                "Beta",
+                "Erlang",
+                "Exponencial",
+                "Gamma",
+                "Johnson",
+                "Normal",
+                "Triangular",
+                "Uniforme",
+                "Weibull",
+                "Lognormal",
+            );
+
+            $selected_distributions = $request->distributions; // Cria uma variável para receber as distribuições selecionadas pelo usuário
+            $data_array = explode(";", $request->data); //Transforma a string de dados [do arquivo selecionado] em um array
+            $data_array = array_filter($data_array); //Remove eventuais elementos vazios presentes no vetor
+
+            foreach ($selected_distributions as $selected) { // Para cada distribuição selecionada, faz a plotagem
+                if (in_array($selected, $all_distributions)) { //Se a variável selecionada está presente no array com todas as distribuições
+                    $selected = strtolower($selected); // Passa para minúscula para chamar o arquivo python
+                    $json = json_encode($data_array); //codificação json para executar o processo
+                    $process = new Process("python3 ../resources/python/" . $selected . ".py {$json}"); // Executa o processo
+                    $process->run();
+                    // Após o término do comando, é verificado se terminou sem erros
+                    if (!$process->isSuccessful()) {
+                        throw new ProcessFailedException($process);
+                    }
+
+                    $plot = $process->getOutput();
+                    dd($plot);
+                }
             }
-            
-            $items = json_decode($process->getOutput());
-            
-            $plot = new Plot;
-            $plot->file_id = $request->file_id;
-            $plot->data = $items;
-            $plot->name = "plot-basico-".time();
-            $plot->created_at = time();
-            $plot->updated_at = time();
-            $plot->save();
-            
-            return view('result', compact('items'));
-            
+
+            // adiciona ao arquivo quais plotagens foram feitas
             $file = File::find($request->file_id);
-            
-    
-            $file->plot = $distributions;
+            $distributions = implode(", ", $request->distributions);
+            $file->dist = $distributions;
             $file->save();
+
+            // return view('result', compact('items'));
+        } else {
+            return back()
+                ->with('danger', 'Ocorreu um erro fatal, tente novamente.');
         }
-        
     }
 
     public function dist(File $file)

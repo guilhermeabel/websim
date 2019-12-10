@@ -5,28 +5,22 @@ import statistics
 
 import sys
 import json
+import numpy as np
 
 x = sys.argv[1]
 dados = json.loads(x)
+basic_dist=[]
 
-media_aritmetica = statistics.mean(dados)
-mediana = statistics.median(dados)
-moda = statistics.mode(dados)
+basic_dist[0] = statistics.median(dados)
+basic_dist[1] = statistics.mean(dados)
+basic_dist[2] = statistics.stdev(dados)
+basic_dist[3] = np.var(dados)
 
-basic_dist = "A média aritmética é: <b>{}</b> <br>A mediana é: <b>{}</b> <br>E a moda é: <b>{}</b><br>".format(
-    media_aritmetica, mediana, moda)
+try:
+    basic_dist[4] = statistics.mode(dados)
+except statistics.StatisticsError:
+    basic_dist[4] = 'null'
 
-# old_stdout = sys.stdout
-
-# log_file = open("message.log", "w")
-
-# sys.stdout = log_file
-
-# print basic_dist
-
-# sys.stdout = old_stdout
-
-# log_file.close()
-
+# [0]mediana, [1]media_aritmetica, [2]desvio_padrao, [3]variancia, [4]moda 
 
 print(json.dumps(basic_dist))

@@ -21,7 +21,14 @@ class CreateFilesTable extends Migration
             $table->string('user_id');
             $table->string('name');
             $table->string('dist')->default(false);
-            $table->string('data');
+            // dados de matematica discreta
+            # [0]mediana, [1]media_aritmetica, [2]desvio_padrao, [3]variancia, [4]moda
+            $table->string('median');
+            $table->string('mean');
+            $table->string('stdev');
+            $table->string('var');
+            $table->string('mode');
+            //
             $table->timestamps();
         });
     }

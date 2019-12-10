@@ -8,7 +8,7 @@ class Plot extends Model
 {
     protected $fillable = ['file_id', 'name', 'data'];
     
-    public function files()
+    public function file()
     {
         return $this->belongsTo('Websim\File');
     }
